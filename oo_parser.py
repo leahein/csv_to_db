@@ -1,13 +1,7 @@
 import csv
 import os
+from config import credentials
 from sql_account import  SqlAccount
-
-credentials = {
-     'host':     'localhost',
-     'user':     'root',
-     'db':       'contacts',
-     'password': password
-    }
 
 def header_as_expected(expected_header, actual_header):
     if expected_header == actual_header:
@@ -24,4 +18,4 @@ def main(file, table_exists):
                 db.execute_create_table(headers)
             db.execute_file(reader)
 
-main('data/contacts.csv', table_exists = False)
+main('contacts.csv', table_exists = False)

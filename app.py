@@ -2,16 +2,11 @@
 
 from flask import Flask
 from flask import jsonify, request
-
+from config import credentials
 from sql_account import SqlAccount
+import csv
 
-credentials = {
-         'host':     'localhost',
-         'user':     'root',
-         'db':       'contacts',
-         'password': 'L5e3a2h4'
-        }
-
+import pdb
 
 app = Flask(__name__)
 db = SqlAccount('contacts', **credentials)
@@ -26,6 +21,23 @@ def show(contact_id):
     contact = db.execute_query(db.select_one(), contact_id, fetch=True)
     return jsonify({'contact': contact})
 
+
+@app.route('/contacts', methods=['POST'])
+def create():
+    contacts = request.files["file"]
+    table_exists = request.form['table_exists']
+    reader = csv.reader(contacts)
+    headers = next(reader)
+    if table_exists:
+        header_as_expected(db.table_headers(), headers)
+    else:
+        db.execute_create_table(headers)
+    db.execute_file(reader)
+    return ('Your Contacts have been added.', 200)
+
+def header_as_expected(expected_header, actual_header):
+    if expected_header == actual_header:
+        return True
 
 
 if __name__ == '__main__':
