@@ -24,16 +24,19 @@ def show(contact_id):
 
 @app.route('/contacts', methods=['POST'])
 def create():
-    contacts = request.files["file"]
-    table_exists = request.form['table_exists']
-    reader = csv.reader(contacts)
+    reader = csv.reader(request.files['file'])
     headers = next(reader)
+    validate_or_create_by(headers)
+    db.execute_file(reader)
+    return ('Your Contacts have been added.', 200)
+
+def validate_or_create_by(headers):
+    table_exists = request.form['table_exists']
     if table_exists:
         header_as_expected(db.table_headers(), headers)
     else:
         db.execute_create_table(headers)
-    db.execute_file(reader)
-    return ('Your Contacts have been added.', 200)
+
 
 def header_as_expected(expected_header, actual_header):
     if expected_header == actual_header:
@@ -42,5 +45,4 @@ def header_as_expected(expected_header, actual_header):
 
 if __name__ == '__main__':
     app.run(debug=True)
-
 

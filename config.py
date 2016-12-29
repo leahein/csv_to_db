@@ -4,5 +4,3 @@ credentials = {
      'db':       'contacts',
      'password': ''
     }
-
-
