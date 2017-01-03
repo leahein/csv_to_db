@@ -17,7 +17,6 @@ class SqlAccount(object):
         self.cursor = self.connection.cursor()
         self.table = table
 
-
 ##########################
 # SQL Query strings
 ##########################

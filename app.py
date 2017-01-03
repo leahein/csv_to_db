@@ -1,7 +1,6 @@
 #!flask/bin/python
 
-from flask import Flask
-from flask import jsonify, request
+from flask import Flask, jsonify, request
 from config import credentials
 from sql_account import SqlAccount
 import csv
@@ -32,7 +31,7 @@ def create():
 
 def validate_or_create_by(headers):
     table_exists = request.form['table_exists']
-    if table_exists:
+    if table_exists == 'True':
         header_as_expected(db.table_headers(), headers)
     else:
         db.execute_create_table(headers)
