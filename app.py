@@ -5,8 +5,6 @@ from config import credentials
 from sql_account import SqlAccount
 import csv
 
-import pdb
-
 app = Flask(__name__)
 db = SqlAccount('contacts', **credentials)
 

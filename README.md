@@ -5,7 +5,7 @@
     SqlAccount Class for creating a database connection and executing SQL queries.
    
 # [app.py] (https://github.com/leahein/csv_to_db/blob/master/app.py)
-    Accepts GET requests and responds with JSON using the flask API
+    Accepts GET and POST requests and responds with JSON using the flask API
 
 
 # [contacts.csv] (https://github.com/leahein/csv_to_db/blob/master/data/contacts.csv)
